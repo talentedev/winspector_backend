@@ -118,7 +118,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $user = $this->user::find($id);
+
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->phone = $request->get('phone');
+            $user->address = $request->get('address');
+            $user->promtpay_id = $request->get('promtpay_id');
+
+            $user->save();
+
+            return response()->json(['status' => true], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => false], 200);
+        }
     }
 
     /**
@@ -129,6 +145,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->user->destroy($id);
+        return response()->json(['status' => true], 200);
     }
 }
