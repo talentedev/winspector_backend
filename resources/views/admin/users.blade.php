@@ -22,7 +22,7 @@
                         <th class="text-center">Email</th>
                         <th class="text-center">Phone No.</th>
                         <th class="text-center">Address</th>
-                        <th class="text-center">PromtPay ID</th>
+                        <th class="text-center">ID Card Number</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
@@ -36,7 +36,7 @@
                         <td class="text-center">{{ $user->email }}</td>
                         <td class="text-center">{{ $user->phone }}</td>
                         <td class="text-center">{{ $user->address }}</td>
-                        <td class="text-center">{{ $user->promtpay_id }}</td>
+                        <td class="text-center">{{ $user->id_number }}</td>
                         <td class="text-center h4">
                             <span class="label {{ $user->verified == 0 ? 'label-danger' : 'label-success' }}">
                             @if( $user->verified )
@@ -92,8 +92,8 @@
                             <input type="text" class="form-control" id="address">
                         </div>
                         <div class="form-group">
-                            <label for="promtpay_id">PromtPay ID</label>
-                            <input type="text" class="form-control" id="promtpay_id" required>
+                            <label for="id_number">ID Card Number</label>
+                            <input type="text" class="form-control" id="id_number" required>
                             <div class="help-block with-errors"></div>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

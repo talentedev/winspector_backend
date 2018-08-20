@@ -126,7 +126,7 @@ class UserController extends Controller
             $user->email = $request->get('email');
             $user->phone = $request->get('phone');
             $user->address = $request->get('address');
-            $user->promtpay_id = $request->get('promtpay_id');
+            $user->id_number = $request->get('id_number');
 
             $user->save();
 

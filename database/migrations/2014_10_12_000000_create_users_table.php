@@ -19,8 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->string('promtpay_id')->nullable();
+            $table->string('id_number')->nullable();
             $table->boolean('verified')->default(false);
+            $table->string('verification_token')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

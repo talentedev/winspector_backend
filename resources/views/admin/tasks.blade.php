@@ -16,36 +16,63 @@
             <table id="upcomingTasks" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center"><input type="checkbox" class="minimal"></th>
-                        <th class="text-center">Task Name</th>
-                        <th class="text-center">Phone No.</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Task Description</th>
-                        <th class="text-center">Expire</th>
+                        <!-- <th class="text-center"><input type="checkbox" class="minimal"></th> -->
+                        <th class="text-center">No.</th>
+                        <th class="text-center">Task Number</th>
+                        <th class="text-center">Owner Email</th>
+                        <th class="text-center">Inspector Email</th>
+                        <th class="text-center">Task Item</th>
+                        <th class="text-center">Location</th>
+                        <th class="text-center">Shop</th>
+                        <th class="text-center">Expire Date</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($tasks as $task)
+                @foreach ($tasks as $key => $task)
                     <tr>
-                        <td class="text-center"><input type="checkbox" class="minimal" data-id="{{ $task->id }}"></td>
-                        <td class="text-center">{{ $task->name }}</td>
-                        <td class="text-center">{{ $task->user->phone }}</td>
-                        <td class="text-center">{{ $task->user->email }}</td>
-                        <td class="text-center">{{ $task->description }}</td>
+                        <!-- <td class="text-center"><input type="checkbox" class="minimal" data-id="{{ $task->id }}"></td> -->
+                        <td class="text-center">{{ $key + 1 }}</td>
+                        <td class="text-center">#{{ $task->number }}</td>
+                        <td class="text-center">{{ $task->owner->email }}</td>
+                        <td class="text-center">{{ $task->inspector->email }}</td>
+                        <td class="text-center">{{ $task->item }}</td>
+                        <td class="text-center">{{ $task->location }}</td>
+                        <td class="text-center">{{ $task->shop }}</td>
                         <td class="text-center h4">
                             <span class="label label-danger">
-                            @if( $task->deadline == date('Y-m-d'))
+                            @if( $task->due_date == date('Y-m-d'))
                                 Today
                             @else
                                 @php
-                                    echo date('j M', strtotime($task->deadline));
+                                    echo date('j M', strtotime($task->due_date));
                                 @endphp
                             @endif
                             </span>
                         </td>
-                        <td class="text-center text-green h4"><i class="fa fa-check-square"></i></td>
+                        <td class="text-center h4">
+                            @switch($task->status)
+                                @case(0)
+                                    <span class="label label-primary">Available</span>
+                                    @break
+
+                                @case(1)
+                                    <span class="label label-success">Taken</span>
+                                    @break
+
+                                @case(2)
+                                    <span class="label label-warning">Check</span>
+                                    @break
+
+                                @case(3)
+                                    <span class="label label-default">Finish</span>
+                                    @break
+
+                                @default
+                                    <span>Something went wrong, please try again</span>
+                            @endswitch
+                        </td>
                         <td class="text-center text-red h4">
                             <i class="fa fa-trash pointer delete-task" data-id="{{ $task->id }}"></i>
                         </td>

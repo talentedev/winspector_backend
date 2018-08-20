@@ -53,20 +53,29 @@ class TaskController extends ApiController
      */
     public function store(Request $request)
     {
-        $message = '';
+        try {
 
-        if($this->existSameTask($request->get('name'))) {
-            $message = 'Task exist already';
-        } else {
-            $this->task->name = $request->get('name');
-            $this->task->deadline = $request->get('deadline');
-            $this->task->description = $request->get('description');
-            $this->task->user_id = auth()->user()->id;
+            $this->task->number = rand(10000000, 99999999);
+            $this->task->item = $request->get('item');
+            $this->task->location = $request->get('location');
+            $this->task->shop = $request->get('shop');
+            $this->task->due_date = $request->get('due_date');
+
             $this->task->save();
-            $message = 'Task successfully created';
-        }
 
-        return $this->respond(['message' => $message]);
+            auth()->user()->tasks()->attach($this->task->orderBy('created_at', 'desc')->first()->id);
+
+            return $this->respond([
+                        'status' => true,
+                        'data' => $this->task->orderBy('created_at', 'desc')->first()
+                    ]);
+
+        } catch(\Exception $e) {
+            return $this->respond([
+                        'status' => false,
+                        'message' => $e->getMessage()
+                    ]);
+        }
     }
 
     /**
@@ -77,7 +86,18 @@ class TaskController extends ApiController
      */
     public function show($id)
     {
-        //
+        try {
+            $task = $this->task->find($id);
+            return $this->respond([
+                        'status' => true,
+                        'task' => $task
+                    ]);
+        } catch(\Exception $e) {
+            return $this->respond([
+                        'status' => false,
+                        'message' => $e->getMessage()
+                    ]);
+        }
     }
 
     /**

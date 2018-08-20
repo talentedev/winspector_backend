@@ -78,7 +78,7 @@
 
 @if(config('adminlte.plugins.iCheck'))
     <!-- iCheck -->
-    <script src="{{ asset('vendor/adminlte/plugins/iCheck/iCheck.min.js') }}"></script>
+    <script src="{{ asset('vendor/adminlte/plugins/iCheck/icheck.min.js') }}"></script>
 @endif
 
 <!-- Bootstrap waitingfor -->

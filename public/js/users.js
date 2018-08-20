@@ -99,7 +99,7 @@ $(function () {
         $('#user_email').val(userInfo.email);
         $('#phone_number').val(userInfo.phone);
         $('#address').val(userInfo.address);
-        $('#promtpay_id').val(userInfo.promtpay_id);
+        $('#id_number').val(userInfo.id_number);
     });
 
     function initUserModal() {
@@ -108,7 +108,7 @@ $(function () {
         $('#user_email').val('');
         $('#phone_number').val('');
         $('#address').val('');
-        $('#promtpay_id').val('');
+        $('#id_number').val('');
     }
 
     // Update user info
@@ -131,7 +131,7 @@ $(function () {
             email: $('#user_email').val(),
             phone: $('#phone_number').val(),
             address: $('#address').val(),
-            promtpay_id: $('#promtpay_id').val()
+            id_number: $('#id_number').val()
         };
 
         axios.put(url, userData, id).then(function (response) {

@@ -49,9 +49,20 @@ class TaskController extends Controller
     public function getPendingTasks()
     {
         $tasks = $this->task->where('status', '!=', 3)->get();
+
+        $arr_tasks = array();
+        foreach ($tasks as $task) {
+            // $taskoo = $task->users->role('owner')->get();
+            foreach ($task->users as $user) {
+                $task['owner'] = $user->role('owner')->get()->first();
+                $task['inspector'] = $user->role('inspector')->get()->first();
+            }
+            array_push($arr_tasks, $task);
+        }
+
         return view('admin.tasks', [
             'title' => 'Pending Jobs',
-            'tasks' => $tasks
+            'tasks' => $arr_tasks
         ]);
     }
 
