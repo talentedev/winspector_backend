@@ -54,21 +54,27 @@ class TaskController extends ApiController
     public function store(Request $request)
     {
         try {
+            if (Auth::user()->hasRole('owner')) {
+                $this->task->number = rand(10000000, 99999999);
+                $this->task->item = $request->get('item');
+                $this->task->location = $request->get('location');
+                $this->task->shop = $request->get('shop');
+                $this->task->due_date = date("Y-m-d", strtotime("+7 day"));
 
-            $this->task->number = rand(10000000, 99999999);
-            $this->task->item = $request->get('item');
-            $this->task->location = $request->get('location');
-            $this->task->shop = $request->get('shop');
-            $this->task->due_date = $request->get('due_date');
+                $this->task->save();
 
-            $this->task->save();
+                auth()->user()->tasks()->attach($this->task->orderBy('created_at', 'desc')->first()->id);
 
-            auth()->user()->tasks()->attach($this->task->orderBy('created_at', 'desc')->first()->id);
-
-            return $this->respond([
-                        'status' => true,
-                        'data' => $this->task->orderBy('created_at', 'desc')->first()
-                    ]);
+                return $this->respond([
+                            'status' => true,
+                            'data' => $this->task->orderBy('created_at', 'desc')->first()
+                        ]);
+            } else {
+                return $this->respond([
+                            'status' => false,
+                            'message' => 'The user has no permission to create job.'
+                        ]);
+            }
 
         } catch(\Exception $e) {
             return $this->respond([
@@ -194,16 +200,23 @@ class TaskController extends ApiController
      */
     public function acceptTask($task_id)
     {
-        $task = $this->task->find($task_id);
-        $task->status = 1;
+        if (Auth::user()->hasRole('inspector')) {
+            $task = $this->task->find($task_id);
+            $task->status = 1;
 
-        $task->save();
+            $task->save();
 
-        auth()->user()->tasks()->attach($task_id);
+            auth()->user()->tasks()->attach($task_id);
 
-        return $this->respond([
-            'status' => true,
-            'data' => $task
-        ]);
+            return $this->respond([
+                'status' => true,
+                'data' => $task
+            ]);
+        } else {
+            return $this->respond([
+                        'status' => false,
+                        'message' => 'The user has no permission to accept job.'
+                    ]);
+        }
     }
 }

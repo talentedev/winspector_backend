@@ -148,6 +148,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->task->destroy($id);
+        return response()->json(['status' => true], 200);
     }
 }

@@ -55,6 +55,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function tasks()
     {
-        return $this->belongsToMany('App\Task')->withTimestamps();
+        return $this->belongsToMany('App\Task');
     }
 }

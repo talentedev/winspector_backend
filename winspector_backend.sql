@@ -89,7 +89,7 @@ CREATE TABLE `permissions` (
 
 /*Data for the table `permissions` */
 
-insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-20 02:43:11','2018-08-20 02:43:11'),(2,'owner','api','2018-08-20 02:43:11','2018-08-20 02:43:11'),(3,'inspector','api','2018-08-20 02:43:11','2018-08-20 02:43:11');
+insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-20 18:37:27','2018-08-20 18:37:27'),(2,'owner','api','2018-08-20 18:37:27','2018-08-20 18:37:27'),(3,'inspector','api','2018-08-20 18:37:27','2018-08-20 18:37:27');
 
 /*Table structure for table `role_has_permissions` */
 
@@ -121,22 +121,24 @@ CREATE TABLE `roles` (
 
 /*Data for the table `roles` */
 
-insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-20 02:43:11','2018-08-20 02:43:11'),(2,'owner','web','2018-08-20 02:43:11','2018-08-20 02:43:11'),(3,'inspector','web','2018-08-20 02:43:11','2018-08-20 02:43:11');
+insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-20 18:37:27','2018-08-20 18:37:27'),(2,'owner','web','2018-08-20 18:37:27','2018-08-20 18:37:27'),(3,'inspector','web','2018-08-20 18:37:27','2018-08-20 18:37:27');
 
 /*Table structure for table `task_user` */
 
 DROP TABLE IF EXISTS `task_user`;
 
 CREATE TABLE `task_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `task_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `task_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`task_id`,`user_id`),
+  KEY `task_user_user_id_foreign` (`user_id`),
+  CONSTRAINT `task_user_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `task_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `task_user` */
+
+insert  into `task_user`(`task_id`,`user_id`) values (3,2),(4,2);
 
 /*Table structure for table `tasks` */
 
@@ -158,9 +160,11 @@ CREATE TABLE `tasks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tasks_number_unique` (`number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tasks` */
+
+insert  into `tasks`(`id`,`number`,`item`,`location`,`shop`,`due_date`,`img_url1`,`img_url2`,`img_url3`,`img_url4`,`status`,`created_at`,`updated_at`) values (3,95783172,'shop light','new york','winspec','2018-08-25',NULL,NULL,NULL,NULL,0,'2018-08-20 19:37:15','2018-08-20 19:37:15'),(4,69879910,'shop light','new york','winspec','2018-08-27',NULL,NULL,NULL,NULL,0,'2018-08-20 19:43:55','2018-08-20 19:43:55');
 
 /*Table structure for table `users` */
 
@@ -185,7 +189,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`phone`,`address`,`id_number`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin User','admin@gmail.com',NULL,NULL,NULL,0,NULL,'$2y$10$XpptPOnLtLCiCZqlsoReAOcHDVr9Vf8.Sk.JKTAT3TZMrOcmxXUEC',NULL,'2018-08-20 02:43:11','2018-08-20 02:43:11'),(2,'Owner','owner@gmail.com','11111111','New York','1111 2222',0,NULL,'$2y$10$F0aB0b5aavgIdol6FZTN2ulHyluDQxM53x4XzjyKCqpSZUestiVrS',NULL,'2018-08-20 02:43:11','2018-08-20 02:43:11'),(3,'Inspector','inspector@gmail.com','1234567890','Rondon','333 2222',0,NULL,'$2y$10$tqhm09ObqGJVzBkCsm7B9.TMLY2KXeJ3.YL4cWUDaQtKyfyNzxMMa',NULL,'2018-08-20 02:43:12','2018-08-20 02:43:12');
+insert  into `users`(`id`,`name`,`email`,`phone`,`address`,`id_number`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin User','admin@gmail.com',NULL,NULL,NULL,0,NULL,'$2y$10$twT7Owl2e9q5f4dilGu.ouMCs5d6UD14c.xXKRykxhJb8rHFcmyEq','jgBloWehqaAFqZ4fbWJiyj9hlg9p3WICbWrHfT1NMxGVTBoydy41iO2m4gXE','2018-08-20 18:37:27','2018-08-20 18:37:27'),(2,'Owner','owner@gmail.com','11111111','New York','1111 2222',1,NULL,'$2y$10$iCeW4z3xyjwpKuWmy8GRLurWNRpiNvP5W6QwAFo.ennijR6/5fZoS',NULL,'2018-08-20 18:37:27','2018-08-20 18:37:27'),(3,'Inspector','inspector@gmail.com','1234567890','Rondon','333 2222',1,NULL,'$2y$10$ks8z.8H4r0A86Nw.EeEYJO9qug6L/wOYqVeKmG1xGJY13zb4NBVia',NULL,'2018-08-20 18:37:27','2018-08-20 18:37:27');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

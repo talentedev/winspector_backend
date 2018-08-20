@@ -33,6 +33,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect('owners');
+        if (Auth::user()->hasRole('admin')) {
+            return redirect('owners');
+        } else {
+            return redirect('login');
+        }
     }
 }
