@@ -36,7 +36,7 @@
                         <td class="text-center">{{ $key + 1 }}</td>
                         <td class="text-center">#{{ $task->number }}</td>
                         <td class="text-center">{{ $task->owner->email }}</td>
-                        <td class="text-center">{{ $task->inspector->email }}</td>
+                        <td class="text-center">{{ $task->inspector['email'] }}</td>
                         <td class="text-center">{{ $task->item }}</td>
                         <td class="text-center">{{ $task->location }}</td>
                         <td class="text-center">{{ $task->shop }}</td>

@@ -64,6 +64,11 @@ class Handler extends ExceptionHandler
                 default:
                     break;
             }
+        } else if ($exception instanceof \Jrean\UserVerification\Exceptions\UserNotVerifiedException ) {
+            return response()->json([
+                        'status' => 'error',
+                        'message' => 'User is not verified'
+                    ]);
         }
 
         return parent::render($request, $exception);

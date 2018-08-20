@@ -54,8 +54,13 @@ class TaskController extends Controller
         foreach ($tasks as $task) {
             // $taskoo = $task->users->role('owner')->get();
             foreach ($task->users as $user) {
-                $task['owner'] = $user->role('owner')->get()->first();
-                $task['inspector'] = $user->role('inspector')->get()->first();
+                if ($user->hasRole('owner')) {
+                    $task['owner'] = $user;
+                } else if ($user->hasRole('inspector')) {
+                    $task['inspector'] = $user;
+                }
+                // $task['owner'] = $user->role('owner')->get()->first();
+                // $task['inspector'] = $user->role('inspector')->get()->last();
             }
             array_push($arr_tasks, $task);
         }

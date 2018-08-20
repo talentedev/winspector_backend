@@ -120,7 +120,59 @@ class TaskController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $task = $this->task->find($id);
+            $task->item = $request->get('item');
+            $task->location = $request->get('location');
+            $task->shop = $request->get('shop');
+
+            // Convert base64 to image object and save
+            $image1 = $request->get('img_url1');
+            if ($image1 != '') {
+                $image1 = str_replace('data:image/png;base64,', '', $image1);
+                $imgName = 'photo1-' . time() . '.png';
+                \File::put(public_path(). '/photos/' . $imgName, base64_decode($image1));
+                $task->img_url1 = url('/'). '/photos/' . $imgName;
+            }
+
+            $image2 = $request->get('img_url2');
+            if ($image2 != '') {
+                $image2 = str_replace('data:image/png;base64,', '', $image2);
+                $imgName = 'photo2-' . time() . '.png';
+                \File::put(public_path(). '/photos/' . $imgName, base64_decode($image2));
+                $task->img_url2 = url('/'). '/photos/' . $imgName;
+            }
+
+            $image3 = $request->get('img_url3');
+            if ($image3 != '') {
+                $image3 = str_replace('data:image/png;base64,', '', $image3);
+                $imgName = 'photo3-' . time() . '.png';
+                \File::put(public_path(). '/photos/' . $imgName, base64_decode($image3));
+                $task->img_url3 = url('/'). '/photos/' . $imgName;
+            }
+
+            $image4 = $request->get('img_url4');
+            if ($image4 != '') {
+                $image4 = str_replace('data:image/png;base64,', '', $image4);
+                $imgName = 'photo4-' . time() . '.png';
+                \File::put(public_path(). '/photos/' . $imgName, base64_decode($image4));
+                $task->img_url4 = url('/'). '/photos/' . $imgName;
+            }
+
+            $task->save();
+
+            return $this->respond([
+                        'status' => true,
+                        'data' => $this->task->orderBy('updated_at', 'desc')->first()
+                    ]);
+
+        } catch(\Exception $e) {
+            return $this->respond([
+                        'status' => false,
+                        'message' => $e->getMessage()
+                    ]);
+        }
     }
 
     /**
@@ -135,18 +187,23 @@ class TaskController extends ApiController
     }
 
     /**
-     * Check if same named task exist.
+     * Accept the task
      *
      * @param  string $task_name
      * @return Boolean
      */
-    public function existSameTask($task_name)
+    public function acceptTask($task_id)
     {
-        $is_exist = false;
-        $task = auth()->user()->tasks()->where('name', $task_name)->first();
-        if($task) {
-            $is_exist = true;
-        }
-        return $is_exist;
+        $task = $this->task->find($task_id);
+        $task->status = 1;
+
+        $task->save();
+
+        auth()->user()->tasks()->attach($task_id);
+
+        return $this->respond([
+            'status' => true,
+            'data' => $task
+        ]);
     }
 }

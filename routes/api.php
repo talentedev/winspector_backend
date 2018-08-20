@@ -24,8 +24,9 @@ Route::group(['middleware' => 'api'], function ($router) {
 
 });
 
-Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
+Route::namespace('Api')->middleware(['jwt.auth', 'isVerified'])->group(function($router) {
 
     $router->resource('tasks', 'TaskController');
+    $router->get('accept-task/{task_id}', 'TaskController@acceptTask');
 
 });
