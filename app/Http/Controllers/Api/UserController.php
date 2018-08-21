@@ -4,9 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,7 +81,30 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $user = $this->user::find($id);
+
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->phone = $request->get('phone');
+            $user->address = $request->get('address');
+            $user->id_number = $request->get('id_number');
+            $user->office_name = $request->get('office_name');
+
+            $user->save();
+
+            return $this->respond([
+                    'status' => true,
+                    'data' => $user
+                ]);
+
+        } catch (\Exception $e) {
+            return $this->respond([
+                    'status' => false,
+                    'message' => $e->getMessage()
+                ]);
+        }
     }
 
     /**

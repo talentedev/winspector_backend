@@ -24,6 +24,7 @@ $(function () {
         $('#phone_number').val(userInfo.phone);
         $('#address').val(userInfo.address);
         $('#id_number').val(userInfo.id_number);
+        $('#office_name').val(userInfo.office_name);
     });
 
     function initUserModal() {
@@ -33,6 +34,7 @@ $(function () {
         $('#phone_number').val('');
         $('#address').val('');
         $('#id_number').val('');
+        $('#office_name').val('');
     }
 
     // Update user info
@@ -55,7 +57,8 @@ $(function () {
             email: $('#user_email').val(),
             phone: $('#phone_number').val(),
             address: $('#address').val(),
-            id_number: $('#id_number').val()
+            id_number: $('#id_number').val(),
+            office_name: $('#office_name').val()
         };
 
         axios.put(url, userData, id)

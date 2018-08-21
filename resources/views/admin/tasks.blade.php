@@ -58,14 +58,17 @@
                                     @break
 
                                 @case(1)
-                                    <span class="label label-success">Taken</span>
+                                    <span class="label label-success">Working</span>
                                     @break
 
                                 @case(2)
-                                    <span class="label label-warning">Check</span>
+                                    <span class="label label-warning">Checking</span>
                                     @break
 
                                 @case(3)
+                                    <span class="label label-danger">Rework</span>
+                                    @break
+                                @case(4)
                                     <span class="label label-default">Finish</span>
                                     @break
 

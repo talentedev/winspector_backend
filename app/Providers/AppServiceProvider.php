@@ -90,10 +90,10 @@ class AppServiceProvider extends ServiceProvider
                 return User::role('inspector')->count();
                 break;
             case 'pending-jobs':
-                return Task::where('status', '!=', 3)->count();
+                return Task::where('status', '!=', 4)->count();
                 break;
             case 'finished-jobs':
-                return Task::where('status', 3)->count();
+                return Task::where('status', 4)->count();
                 break;
             
             default:

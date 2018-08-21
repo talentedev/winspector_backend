@@ -27,6 +27,10 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::namespace('Api')->middleware(['jwt.auth', 'isVerified'])->group(function($router) {
 
     $router->resource('tasks', 'TaskController');
+    $router->resource('users', 'UserController');
     $router->get('accept-task/{task_id}', 'TaskController@acceptTask');
+    $router->post('send-photos', 'TaskController@sendPhotos');
+    $router->get('retake-photos/{task_id}', 'TaskController@retakePhotos');
+    $router->get('finish-task/{task_id}', 'TaskController@finishTask');
 
 });

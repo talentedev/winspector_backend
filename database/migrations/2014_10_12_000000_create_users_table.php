@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('id_number')->nullable();
+            $table->string('office_name')->nullable();
             $table->boolean('verified')->default(false);
             $table->string('verification_token')->nullable();
             $table->string('password');

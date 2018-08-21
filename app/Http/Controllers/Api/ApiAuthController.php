@@ -139,7 +139,10 @@ class ApiAuthController extends ApiController
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        $role = $user->roles()->pluck('name');
+        $user->role = $role;
+        return $this->respond($user);
     }
 
     /**

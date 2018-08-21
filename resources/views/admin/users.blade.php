@@ -23,6 +23,9 @@
                         <th class="text-center">Phone No.</th>
                         <th class="text-center">Address</th>
                         <th class="text-center">ID Card Number</th>
+                        @if($title == 'Employers')
+                            <th class="text-center">Office Name/Address</th>
+                        @endif
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
@@ -37,6 +40,9 @@
                         <td class="text-center">{{ $user->phone }}</td>
                         <td class="text-center">{{ $user->address }}</td>
                         <td class="text-center">{{ $user->id_number }}</td>
+                        @if($title == 'Employers')
+                            <td class="text-center">{{ $user->office_name }}</td>
+                        @endif
                         <td class="text-center h4">
                             <span class="label {{ $user->verified == 0 ? 'label-danger' : 'label-success' }}">
                             @if( $user->verified )
@@ -96,6 +102,12 @@
                             <input type="text" class="form-control" id="id_number" required>
                             <div class="help-block with-errors"></div>
                         </div>
+                        @if($title == 'Employers')
+                            <div class="form-group">
+                            <label for="office_name">Office Name/Address</label>
+                            <input type="text" class="form-control" id="office_name" >
+                        </div>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" id="btn_save_user">Save</button>
                     </form>

@@ -127,6 +127,7 @@ class UserController extends Controller
             $user->phone = $request->get('phone');
             $user->address = $request->get('address');
             $user->id_number = $request->get('id_number');
+            $user->office_name = $request->get('office_name');
 
             $user->save();
 

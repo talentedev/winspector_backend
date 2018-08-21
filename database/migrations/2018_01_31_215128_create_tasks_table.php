@@ -24,6 +24,10 @@ class CreateTasksTable extends Migration
             $table->string('img_url2')->nullable();
             $table->string('img_url3')->nullable();
             $table->string('img_url4')->nullable();
+            $table->string('taken_img1')->nullable();
+            $table->string('taken_img2')->nullable();
+            $table->string('taken_img3')->nullable();
+            $table->string('taken_img4')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

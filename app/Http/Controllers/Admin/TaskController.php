@@ -48,7 +48,7 @@ class TaskController extends Controller
      */
     public function getPendingTasks()
     {
-        $tasks = $this->task->where('status', '!=', 3)->get();
+        $tasks = $this->task->where('status', '!=', 4)->get();
 
         $arr_tasks = array();
         foreach ($tasks as $task) {
@@ -59,8 +59,6 @@ class TaskController extends Controller
                 } else if ($user->hasRole('inspector')) {
                     $task['inspector'] = $user;
                 }
-                // $task['owner'] = $user->role('owner')->get()->first();
-                // $task['inspector'] = $user->role('inspector')->get()->last();
             }
             array_push($arr_tasks, $task);
         }
@@ -78,10 +76,24 @@ class TaskController extends Controller
      */
     public function getFinishedTasks()
     {
-        $tasks = $this->task->where('status', 3)->get();
+        $tasks = $this->task->where('status', 4)->get();
+
+        $arr_tasks = array();
+        foreach ($tasks as $task) {
+            // $taskoo = $task->users->role('owner')->get();
+            foreach ($task->users as $user) {
+                if ($user->hasRole('owner')) {
+                    $task['owner'] = $user;
+                } else if ($user->hasRole('inspector')) {
+                    $task['inspector'] = $user;
+                }
+            }
+            array_push($arr_tasks, $task);
+        }
+
         return view('admin.tasks', [
             'title' => 'Finished Jobs',
-            'tasks' => $tasks
+            'tasks' => $arr_tasks
         ]);
     }
 
