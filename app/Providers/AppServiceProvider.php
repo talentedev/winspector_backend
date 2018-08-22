@@ -55,12 +55,21 @@ class AppServiceProvider extends ServiceProvider
                 'label_color' => 'success'
             ];
 
+            $settings = [
+                'text' => 'Account Settings',
+                'url' => 'settings',
+                'icon' => 'cog',
+                'label'       => '',
+                'label_color' => 'success'
+            ];
+
             // add menu items
             $event->menu->add(
                 $owners,
                 $inspectors,
                 $pending_tasks,
-                $finished_tasks
+                $finished_tasks,
+                $settings
             );
         });
     }

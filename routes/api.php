@@ -30,6 +30,7 @@ Route::namespace('Api')->middleware(['jwt.auth', 'isVerified'])->group(function(
 
     $router->resource('tasks', 'TaskController');
     $router->resource('users', 'UserController');
+    $router->get('available-job', 'TaskController@getAvailableTasks');
     $router->get('accept-task/{task_id}', 'TaskController@acceptTask');
     $router->post('send-photos', 'TaskController@sendPhotos');
     $router->get('retake-photos/{task_id}', 'TaskController@retakePhotos');

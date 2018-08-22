@@ -149,4 +149,36 @@ class UserController extends Controller
         $this->user->destroy($id);
         return response()->json(['status' => true], 200);
     }
+
+    /**
+     * Show settings page
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSettings()
+    {
+        return view('admin.settings', [
+            'title' => 'Inespectors',
+            'user' => auth()->user()
+        ]);
+    }
+
+    /**
+     * Change the account info.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function changeSettings(Request $request)
+    {
+        $me = $this->user::find(auth()->user()->id);
+        $me->name = $request->get('name');
+        $me->email = $request->get('email');
+        $password = $request->get('password');
+        if ($password != '') {
+            $me->password = \Illuminate\Support\Facades\Hash::make($request->get('password'));
+        }
+        $me->save();
+        return response()->json(['status' => true], 200);
+    }
 }

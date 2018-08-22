@@ -36,6 +36,17 @@ class TaskController extends ApiController
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableTasks()
+    {
+        $tasks = $this->task->where('status', 0)->get();
+        return $this->respond($tasks);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

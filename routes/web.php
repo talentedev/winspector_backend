@@ -32,6 +32,10 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('pending-jobs', 'TaskController@getPendingTasks');
         Route::get('finished-jobs', 'TaskController@getFinishedTasks');
 
+        // Settings
+        Route::get('settings', 'UserController@showSettings')->name('settings');
+        Route::post('change-setting', 'UserController@changeSettings');
+
     });
 
 });
