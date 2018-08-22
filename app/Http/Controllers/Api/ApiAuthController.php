@@ -34,7 +34,7 @@ class ApiAuthController extends ApiController
      */
     public function __construct(User $user)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'verifyEmail']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'verifyEmail', 'forgotPassword', 'resetPassword']]);
         $this->user = $user;
     }
 
@@ -169,10 +169,90 @@ class ApiAuthController extends ApiController
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Not verified'
+                'message' => 'verification code is not correct'
             ]);
         }
-        
+    }
+
+    /**
+     * Handle a forgot password request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function forgotPassword(Request $request)
+    {
+        try {
+
+            $email = $request->get('email');
+
+            $this->user = $this->user->where('email', $email)->get()->first();
+            if (!empty($this->user)) {
+                $data = array(
+                    'code' => rand(100000,999999)
+                );
+                Mail::send('mail', $data, function($message) {
+                    $message->to($this->user->email, $this->user->name)->subject('Email Verification');
+                });
+
+                $this->user->verification_token = $data['code'];
+                $this->user->save();
+
+                return $this->respond([
+                        'status' => true,
+                        'data' => $this->user
+                    ]);
+            } else {
+                return $this->respond([
+                        'status' => false,
+                        'message' => "The user don't exist"
+                    ]);
+            }
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+        /**
+     * Handle a reset password request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPassword(Request $request)
+    {
+        try {
+
+            $email = $request->get('email');
+            $code = $request->get('code');
+            $password = $request->get('password');
+
+            $user = $this->user->where('email', $email)->get()->first();
+
+            if ($user->verification_token == $code) {
+
+                $user->password = \Illuminate\Support\Facades\Hash::make($password);
+                $user->save();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'password changed'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'invalid verification code'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
