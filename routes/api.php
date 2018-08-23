@@ -23,6 +23,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     $router->post('verify-email', 'Api\ApiAuthController@verifyEmail');
     $router->post('forgot-password', 'Api\ApiAuthController@forgotPassword');
     $router->post('reset-password', 'Api\ApiAuthController@resetPassword');
+    $router->post('resend-token', 'Api\ApiAuthController@resendToken');
 
 });
 

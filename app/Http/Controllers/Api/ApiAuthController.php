@@ -34,7 +34,7 @@ class ApiAuthController extends ApiController
      */
     public function __construct(User $user)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'verifyEmail', 'forgotPassword', 'resetPassword']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'verifyEmail', 'forgotPassword', 'resetPassword', 'resendToken']]);
         $this->user = $user;
     }
 
@@ -245,6 +245,52 @@ class ApiAuthController extends ApiController
                 return response()->json([
                     'status' => false,
                     'message' => 'invalid verification code'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Handle a resend token request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resendToken(Request $request)
+    {
+        try {
+
+            $email = $request->get('email');
+
+            $this->user = $this->user->where('email', $email)->get()->first();
+
+            if (!empty($this->user)) {
+
+                $token = rand(100000,999999);
+                $this->user->verification_token = $token;
+
+                $data = array(
+                    'code' => $token
+                );
+                Mail::send('mail', $data, function($message) {
+                    $message->to($this->user->email, $this->user->name)->subject('Email Verification');
+                });
+
+                $this->user->save();
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'sent token'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User dont exist'
                 ]);
             }
         } catch (\Exception $e) {
