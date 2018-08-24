@@ -275,6 +275,7 @@ class TaskController extends ApiController
                     $task->taken_img4 = url('/'). '/photos/' . $imgName;
                 }
 
+                $task->lat_long = $request->get('lat_long');
                 $task->status = 2;
 
                 $task->save();
