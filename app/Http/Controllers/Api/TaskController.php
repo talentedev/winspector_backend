@@ -71,6 +71,7 @@ class TaskController extends ApiController
                 $this->task->location = $request->get('location');
                 $this->task->shop = $request->get('shop');
                 $this->task->due_date = $request->get('due_date');
+                $this->task->price = $request->get('price');
 
                 // Convert base64 to image object and save
                 $image1 = $request->get('img_url1');

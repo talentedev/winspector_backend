@@ -89,7 +89,7 @@ CREATE TABLE `permissions` (
 
 /*Data for the table `permissions` */
 
-insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-24 15:40:32','2018-08-24 15:40:32'),(2,'owner','api','2018-08-24 15:40:32','2018-08-24 15:40:32'),(3,'inspector','api','2018-08-24 15:40:32','2018-08-24 15:40:32');
+insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-25 16:56:49','2018-08-25 16:56:49'),(2,'owner','api','2018-08-25 16:56:49','2018-08-25 16:56:49'),(3,'inspector','api','2018-08-25 16:56:49','2018-08-25 16:56:49');
 
 /*Table structure for table `role_has_permissions` */
 
@@ -121,7 +121,7 @@ CREATE TABLE `roles` (
 
 /*Data for the table `roles` */
 
-insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-24 15:40:32','2018-08-24 15:40:32'),(2,'owner','web','2018-08-24 15:40:32','2018-08-24 15:40:32'),(3,'inspector','web','2018-08-24 15:40:32','2018-08-24 15:40:32');
+insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-25 16:56:49','2018-08-25 16:56:49'),(2,'owner','web','2018-08-25 16:56:49','2018-08-25 16:56:49'),(3,'inspector','web','2018-08-25 16:56:49','2018-08-25 16:56:49');
 
 /*Table structure for table `task_user` */
 
@@ -138,7 +138,7 @@ CREATE TABLE `task_user` (
 
 /*Data for the table `task_user` */
 
-insert  into `task_user`(`task_id`,`user_id`) values (1,2),(1,3);
+insert  into `task_user`(`task_id`,`user_id`) values (1,2);
 
 /*Table structure for table `tasks` */
 
@@ -152,6 +152,7 @@ CREATE TABLE `tasks` (
   `shop` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lat_long` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `due_date` date DEFAULT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `img_url1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `img_url2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `img_url3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -169,7 +170,7 @@ CREATE TABLE `tasks` (
 
 /*Data for the table `tasks` */
 
-insert  into `tasks`(`id`,`number`,`item`,`location`,`shop`,`lat_long`,`due_date`,`img_url1`,`img_url2`,`img_url3`,`img_url4`,`taken_img1`,`taken_img2`,`taken_img3`,`taken_img4`,`status`,`created_at`,`updated_at`) values (1,55207887,'shop light','new york','winspec','112.12,1212.12','2018-08-28','http://localhost/photos/photo1_1535125282.png','http://localhost/photos/photo2_1535125282.png','http://localhost/photos/photo3_1535125282.png','http://localhost/photos/photo4_1535125282.png','http://localhost/photos/taken1_1535125292.png','http://localhost/photos/taken2_1535125292.png','http://localhost/photos/taken3_1535125292.png','http://localhost/photos/taken4_1535125292.png',2,'2018-08-24 15:41:22','2018-08-24 15:41:32');
+insert  into `tasks`(`id`,`number`,`item`,`location`,`shop`,`lat_long`,`due_date`,`price`,`img_url1`,`img_url2`,`img_url3`,`img_url4`,`taken_img1`,`taken_img2`,`taken_img3`,`taken_img4`,`status`,`created_at`,`updated_at`) values (1,69942909,'shop light','new york','winspec',NULL,'2018-08-28','12.3','http://localhost/photos/photo1_1535216502.png','http://localhost/photos/photo2_1535216502.png','http://localhost/photos/photo3_1535216502.png','http://localhost/photos/photo4_1535216502.png',NULL,NULL,NULL,NULL,0,'2018-08-25 17:01:42','2018-08-25 17:01:42');
 
 /*Table structure for table `users` */
 
@@ -195,7 +196,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`phone`,`address`,`id_number`,`office_name`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin User','admin@gmail.com',NULL,NULL,NULL,NULL,1,NULL,'$2y$10$EHQb4ESES.cehWQTTv/lAOeWNpNUOikv7d1Tf7Z7lphGxB/h/DHSq',NULL,'2018-08-24 15:40:32','2018-08-24 15:40:32'),(2,'Owner','owner@gmail.com','11111111','New York','1111 2222',NULL,1,NULL,'$2y$10$gFCiCFLjcmqzHHdP05wGX.Nff1s5BNPD8KMpWsQ2it6IRXvQO7Fgi',NULL,'2018-08-24 15:40:33','2018-08-24 15:40:33'),(3,'Inspector','inspector@gmail.com','1234567890','Rondon','333 2222',NULL,1,NULL,'$2y$10$u.IoKl1D.nuZvGLc3wnE2eKr/xtEsG1TidLr9Vag4ObE4J4/GkllW',NULL,'2018-08-24 15:40:33','2018-08-24 15:40:33');
+insert  into `users`(`id`,`name`,`email`,`phone`,`address`,`id_number`,`office_name`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin User','admin@gmail.com',NULL,NULL,NULL,NULL,1,NULL,'$2y$10$57AAPqNzmFvLlhI3BQ3/z.wF/.gqwTtcZvQjbAFBZ3dfddSJ8S3Jq',NULL,'2018-08-25 16:56:50','2018-08-25 16:56:50'),(2,'Owner','owner@gmail.com','11111111','New York','1111 2222',NULL,1,NULL,'$2y$10$QXeANhdbnn2RJ2.p9cuTNOj7brsMnRpTXg8gRdwlwcYWIPaWiI9we',NULL,'2018-08-25 16:56:50','2018-08-25 16:56:50'),(3,'Inspector','inspector@gmail.com','1234567890','Rondon','333 2222',NULL,1,NULL,'$2y$10$h61.4AdjPtINBZOQDremrupo3wlrq37eiMs0gOGgJInSU4rKtljCO',NULL,'2018-08-25 16:56:50','2018-08-25 16:56:50');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

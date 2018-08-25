@@ -25,6 +25,7 @@
                         <th class="text-center">Location</th>
                         <th class="text-center">Shop</th>
                         <th class="text-center">Lat & Lang</th>
+                        <th class="text-center">Price</th>
                         <th class="text-center">Expire Date</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
@@ -42,6 +43,7 @@
                         <td class="text-center">{{ $task->location }}</td>
                         <td class="text-center">{{ $task->shop }}</td>
                         <td class="text-center">{{ $task->lat_long }}</td>
+                        <td class="text-center">{{ $task->price }}</td>
                         <td class="text-center h4">
                             <span class="label label-danger">
                             @if( $task->due_date == date('Y-m-d'))

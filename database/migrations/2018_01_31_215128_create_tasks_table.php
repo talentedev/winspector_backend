@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->string('shop');
             $table->string('lat_long')->nullable();
             $table->date('due_date')->nullable();
+            $table->string('price')->nullable();
             $table->string('img_url1')->nullable();
             $table->string('img_url2')->nullable();
             $table->string('img_url3')->nullable();
