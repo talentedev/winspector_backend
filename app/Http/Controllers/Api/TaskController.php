@@ -277,6 +277,7 @@ class TaskController extends ApiController
                 }
 
                 $task->lat_long = $request->get('lat_long');
+                $task->payment_id = $request->get('payment_id');
                 $task->status = 2;
 
                 $task->save();
