@@ -89,7 +89,7 @@ CREATE TABLE `permissions` (
 
 /*Data for the table `permissions` */
 
-insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-29 05:18:38','2018-08-29 05:18:38'),(2,'owner','api','2018-08-29 05:18:38','2018-08-29 05:18:38'),(3,'inspector','api','2018-08-29 05:18:38','2018-08-29 05:18:38');
+insert  into `permissions`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-09-06 02:38:42','2018-09-06 02:38:42'),(2,'owner','api','2018-09-06 02:38:42','2018-09-06 02:38:42'),(3,'inspector','api','2018-09-06 02:38:42','2018-09-06 02:38:42');
 
 /*Table structure for table `role_has_permissions` */
 
@@ -121,7 +121,7 @@ CREATE TABLE `roles` (
 
 /*Data for the table `roles` */
 
-insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-08-29 05:18:38','2018-08-29 05:18:38'),(2,'owner','web','2018-08-29 05:18:38','2018-08-29 05:18:38'),(3,'inspector','web','2018-08-29 05:18:38','2018-08-29 05:18:38');
+insert  into `roles`(`id`,`name`,`guard_name`,`created_at`,`updated_at`) values (1,'admin','web','2018-09-06 02:38:42','2018-09-06 02:38:42'),(2,'owner','web','2018-09-06 02:38:42','2018-09-06 02:38:42'),(3,'inspector','web','2018-09-06 02:38:42','2018-09-06 02:38:42');
 
 /*Table structure for table `task_user` */
 
@@ -137,8 +137,6 @@ CREATE TABLE `task_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `task_user` */
-
-insert  into `task_user`(`task_id`,`user_id`) values (1,2),(1,3);
 
 /*Table structure for table `tasks` */
 
@@ -162,16 +160,15 @@ CREATE TABLE `tasks` (
   `taken_img2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `taken_img3` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `taken_img4` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tasks_number_unique` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tasks` */
-
-insert  into `tasks`(`id`,`number`,`item`,`location`,`shop`,`lat_long`,`due_date`,`payment_id`,`price`,`img_url1`,`img_url2`,`img_url3`,`img_url4`,`taken_img1`,`taken_img2`,`taken_img3`,`taken_img4`,`status`,`created_at`,`updated_at`) values (1,53811568,'shop light','new york','winspec','112.12,1212.12','2018-08-28','0876788787','12.3','http://localhost/photos/photo1_1535520008.png','http://localhost/photos/photo2_1535520008.png','http://localhost/photos/photo3_1535520008.png','http://localhost/photos/photo4_1535520008.png','http://localhost/photos/taken1_1535520080.png','http://localhost/photos/taken2_1535520080.png','http://localhost/photos/taken3_1535520080.png','http://localhost/photos/taken4_1535520080.png',2,'2018-08-29 05:20:08','2018-08-29 05:21:20');
 
 /*Table structure for table `users` */
 
@@ -180,9 +177,19 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `surname` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `soi` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mu` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `village` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `street` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `district` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `province` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `promtpay` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `office_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
@@ -197,7 +204,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`phone`,`address`,`id_number`,`office_name`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin User','admin@gmail.com',NULL,NULL,NULL,NULL,1,NULL,'$2y$10$fK1rJEcjkOChhCfqyzhH8uTyHpz/cStY/uHZHjyFK1nnu.5EaLDaO',NULL,'2018-08-29 05:18:38','2018-08-29 05:18:38'),(2,'Owner','owner@gmail.com','11111111','New York','1111 2222',NULL,1,NULL,'$2y$10$EBJTlfB9b1eQPruf1PTpA.OwI27i9yy9Ax8sJVEOmMy/XG2xG8qMS',NULL,'2018-08-29 05:18:39','2018-08-29 05:18:39'),(3,'Inspector','inspector@gmail.com','1234567890','Rondon','333 2222',NULL,1,NULL,'$2y$10$COni17gHUFMOwyIrCPjb9OYysb9/Jz97mHJtoaOvW8LoEsyVv4yGK',NULL,'2018-08-29 05:18:39','2018-08-29 05:18:39');
+insert  into `users`(`id`,`name`,`surname`,`email`,`phone`,`no`,`soi`,`mu`,`village`,`street`,`district`,`city`,`province`,`postcode`,`promtpay`,`id_number`,`office_name`,`verified`,`verification_token`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'Admin','User','admin@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,'$2y$10$ng8P5GFMcOiLX44qO0YzKujCnIyBhVqjSAwV1t63nm4eIampMTXR2',NULL,'2018-09-06 02:38:42','2018-09-06 02:38:42'),(2,'Owner','User','owner@gmail.com','11111111',NULL,NULL,NULL,NULL,NULL,NULL,'New York',NULL,NULL,NULL,'1111 2222',NULL,1,NULL,'$2y$10$5YMhbscH.FRANl7ClhjuWeoi8WNamNtax6VDlmKUEUkD2/ix8Osoy',NULL,'2018-09-06 02:38:43','2018-09-06 02:38:43'),(3,'Inspector','User','inspector@gmail.com','1234567890',NULL,NULL,NULL,NULL,NULL,NULL,'Rondon',NULL,NULL,NULL,'333 2222',NULL,1,NULL,'$2y$10$AT4yQSr2x9k6ukl/jZ1LpuxwefzhpEiqx7qcs16uvQ6Ku4rRXQ9be',NULL,'2018-09-06 02:38:43','2018-09-06 02:38:43');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

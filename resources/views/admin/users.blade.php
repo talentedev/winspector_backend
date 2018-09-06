@@ -38,7 +38,7 @@
                         <td class="text-center">{{ $user->name }}</td>
                         <td class="text-center">{{ $user->email }}</td>
                         <td class="text-center">{{ $user->phone }}</td>
-                        <td class="text-center">{{ $user->address }}</td>
+                        <td class="text-center">{{ $user->city }}</td>
                         <td class="text-center">{{ $user->id_number }}</td>
                         @if($title == 'Employers')
                             <td class="text-center">{{ $user->office_name }}</td>

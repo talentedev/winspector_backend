@@ -72,6 +72,7 @@ class TaskController extends ApiController
                 $this->task->shop = $request->get('shop');
                 $this->task->due_date = $request->get('due_date');
                 $this->task->price = $request->get('price');
+                $this->task->reason = '';
 
                 // Convert base64 to image object and save
                 $image1 = $request->get('img_url1');
@@ -278,6 +279,7 @@ class TaskController extends ApiController
 
                 $task->lat_long = $request->get('lat_long');
                 $task->payment_id = $request->get('payment_id');
+                $task->reason = $request->get('reason');
                 $task->status = 2;
 
                 $task->save();

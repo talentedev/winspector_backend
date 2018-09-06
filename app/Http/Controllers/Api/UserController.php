@@ -85,9 +85,20 @@ class UserController extends ApiController
 
             $user = $this->user::find($id);
 
+            $user->name = $request->get('name');
+            $user->surname = $request->get('surname');
             $user->email = $request->get('email');
             $user->phone = $request->get('phone');
-            $user->address = $request->get('address');
+            $user->no = $request->get('no');
+            $user->soi = $request->get('soi');
+            $user->mu = $request->get('mu');
+            $user->village = $request->get('village');
+            $user->street = $request->get('street');
+            $user->district = $request->get('district');
+            $user->city = $request->get('city');
+            $user->province = $request->get('province');
+            $user->postcode = $request->get('postcode');
+            $user->promtpay = $request->get('promtpay');
             $user->id_number = $request->get('id_number');
             $user->office_name = $request->get('office_name');
             $user->password = \Illuminate\Support\Facades\Hash::make($request->get('password'));

@@ -99,9 +99,20 @@ class ApiAuthController extends ApiController
         try {
 
             $this->user->name = $request->get('name');
+            $this->user->surname = $request->get('surname');
             $this->user->email = $request->get('email');
             $this->user->phone = $request->get('phone');
-            $this->user->address = $request->get('address');
+            $this->user->no = $request->get('no');
+            $this->user->soi = $request->get('soi');
+            $this->user->mu = $request->get('mu');
+            $this->user->village = $request->get('village');
+            $this->user->street = $request->get('street');
+            $this->user->district = $request->get('district');
+            $this->user->city = $request->get('city');
+            $this->user->province = $request->get('province');
+            $this->user->postcode = $request->get('postcode');
+            $this->user->promtpay = $request->get('promtpay');
+            $this->user->office_name = $request->get('office_name');
             $this->user->id_number = $request->get('id_number');
             $this->user->password = \Illuminate\Support\Facades\Hash::make($request->get('password'));
 
