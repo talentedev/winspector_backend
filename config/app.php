@@ -169,6 +169,7 @@ return [
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Jrean\UserVerification\UserVerificationServiceProvider::class,
+        Pusher\Laravel\PusherServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -230,6 +231,7 @@ return [
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
+        'Pusher' => Pusher\Laravel\Facades\Pusher::class,
 
     ],
 

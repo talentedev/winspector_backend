@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
+use Pusher;
 
 class TaskController extends ApiController
 {
@@ -102,6 +103,8 @@ class TaskController extends ApiController
                 $this->task->save();
 
                 auth()->user()->tasks()->attach($this->task->orderBy('created_at', 'desc')->first()->id);
+
+                Pusher::trigger('task', 'TaskArrived', array('message' => 'new job is available', 'data' => $this->task));
 
                 return $this->respond([
                             'status' => true,
@@ -222,16 +225,32 @@ class TaskController extends ApiController
     {
         if (Auth::user()->hasRole('inspector')) {
             $task = $this->task->find($task_id);
-            $task->status = 1;
+            if ($task->status != 0) {
+                return $this->respond([
+                    'status' => false,
+                    'message' => 'task is taken already'
+                ]);
+            } else {
+                $task->status = 1;
 
-            $task->save();
+                $task->save();
 
-            auth()->user()->tasks()->attach($task_id);
+                auth()->user()->tasks()->attach($task_id);
 
-            return $this->respond([
-                'status' => true,
-                'data' => $task
-            ]);
+                $owner_email = $task->users()->select('email')->role('owner')->get()->first()->email;
+                $inspector_email = Auth::user()->email;
+                $data = array(
+                    'owner' => $owner_email,
+                    'inspector' => $inspector_email
+                );
+
+                Pusher::trigger('task', 'TaskAccepted', array('message' => 'task is accepted', 'data' => $data));
+
+                return $this->respond([
+                    'status' => true,
+                    'data' => $task
+                ]);
+            }
         } else {
             return $this->respond([
                         'status' => false,
@@ -279,10 +298,21 @@ class TaskController extends ApiController
 
                 $task->lat_long = $request->get('lat_long');
                 $task->payment_id = $request->get('payment_id');
-                $task->reason = $request->get('reason');
+                if ($request->get('reason') != '') {
+                    $task->reason = $request->get('reason');
+                }
                 $task->status = 2;
 
                 $task->save();
+
+                $owner_email = $task->users()->select('email')->role('owner')->get()->first()->email;
+                $inspector_email = Auth::user()->email;
+                $data = array(
+                    'owner' => $owner_email,
+                    'inspector' => $inspector_email
+                );
+
+                Pusher::trigger('task', 'PhotoSent', array('message' => 'photos are sent', 'data' => $data));
 
                 return $this->respond([
                             'status' => true,
@@ -319,6 +349,15 @@ class TaskController extends ApiController
 
                 $task->save();
 
+                $inspector_email = $task->users()->select('email')->role('inspector')->get()->first()->email;
+                $owner_email = Auth::user()->email;
+                $data = array(
+                    'owner' => $owner_email,
+                    'inspector' => $inspector_email
+                );
+
+                Pusher::trigger('task', 'RetakePhoto', array('message' => 'Retake Photos', 'data' => $data));
+
                 return $this->respond([
                             'status' => true,
                             'data' => $task
@@ -353,6 +392,15 @@ class TaskController extends ApiController
                 $task->status = 4;
 
                 $task->save();
+
+                $inspector_email = $task->users()->select('email')->role('inspector')->get()->first()->email;
+                $owner_email = Auth::user()->email;
+                $data = array(
+                    'owner' => $owner_email,
+                    'inspector' => $inspector_email
+                );
+
+                Pusher::trigger('task', 'TaskCompleted', array('message' => 'task is completed', 'data' => $data));
 
                 return $this->respond([
                             'status' => true,
