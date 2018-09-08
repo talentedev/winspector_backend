@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
 use Pusher;
+use App\Mail\TaskFinished;
+use Mail;
 
 class TaskController extends ApiController
 {
@@ -413,6 +415,29 @@ class TaskController extends ApiController
                         ]);
             }
 
+        } catch(\Exception $e) {
+            return $this->respond([
+                        'status' => false,
+                        'message' => $e->getMessage()
+                    ]);
+        }
+    }
+
+    /**
+     * Send mail for finsished task
+     * @param  string $task_id
+     * @return \Illuminate\Http\Response
+     */
+    public function sendMailFinshedTask($task_id)
+    {
+        try {
+            $task = $this->task->find($task_id);
+
+            Mail::to(auth()->user())->send(new TaskFinished($task));
+            return $this->respond([
+                        'status' => true,
+                        'message' => 'Mail sent successfully'
+                    ]);
         } catch(\Exception $e) {
             return $this->respond([
                         'status' => false,

@@ -36,5 +36,6 @@ Route::namespace('Api')->middleware(['jwt.auth', 'isVerified'])->group(function(
     $router->post('send-photos', 'TaskController@sendPhotos');
     $router->get('retake-photos/{task_id}', 'TaskController@retakePhotos');
     $router->get('finish-task/{task_id}', 'TaskController@finishTask');
+    $router->get('send-mail-finshed-task/{task_id}', 'TaskController@sendMailFinshedTask');
 
 });
