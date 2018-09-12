@@ -36,14 +36,34 @@ class TaskFinished extends Mailable
      */
     public function build()
     {
-        $attachPath1 = str_replace(url('/'), public_path(), $this->task->taken_img1);
-        $attachPath2 = str_replace(url('/'), public_path(), $this->task->taken_img2);
-        $attachPath3 = str_replace(url('/'), public_path(), $this->task->taken_img3);
-        $attachPath4 = str_replace(url('/'), public_path(), $this->task->taken_img4);
-        return $this->view('emails.task-finished')
-                    ->attach($attachPath1)
-                    ->attach($attachPath2)
-                    ->attach($attachPath3)
-                    ->attach($attachPath4);
+        $email = $this->view('emails.task-finished');
+
+        $attachments = array();
+
+        if (!empty($this->task->taken_img1)) {
+            $attachPath1 = str_replace(url('/'), public_path(), $this->task->taken_img1);
+            array_push($attachments, $attachPath1);
+        }
+
+        if (!empty($this->task->taken_img2)) {
+            $attachPath2 = str_replace(url('/'), public_path(), $this->task->taken_img2);
+            array_push($attachments, $attachPath2);
+        }
+
+        if (!empty($this->task->taken_img3)) {
+            $attachPath3 = str_replace(url('/'), public_path(), $this->task->taken_img3);
+            array_push($attachments, $attachPath3);
+        }
+
+        if (!empty($this->task->taken_img4)) {
+            $attachPath4 = str_replace(url('/'), public_path(), $this->task->taken_img4);
+            array_push($attachments, $attachPath4);
+        }
+
+        foreach($attachments as $filePath){
+            $email->attach($filePath);
+        }
+
+        return $email;
     }
 }
