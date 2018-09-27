@@ -10,6 +10,7 @@ $(function () {
         info: true
     });
 
+
     // Delete selected task
     var deleteTaskId;
     $('.delete-task').click(function () {
@@ -18,6 +19,14 @@ $(function () {
 
         $('#delete_confirm_modal').modal('show');
     });
+
+    // Event when page is updated
+    $('#tasks_table').on( 'draw.dt', function () {
+        $('.delete-task').click(function () {
+            deleteTaskId = $(this).data('id');
+            $('#delete_confirm_modal').modal('show');
+        });
+    } );
 
     var modalDeleteConfirm = function(callback){
 
