@@ -38,7 +38,7 @@
                         <!-- <td class="text-center"><input type="checkbox" class="minimal" data-id="{{ $task->id }}"></td> -->
                         <td class="text-center">{{ $key + 1 }}</td>
                         <td class="text-center">#{{ $task->number }}</td>
-                        <td class="text-center">{{ $task->owner->email }}</td>
+                        <td class="text-center">{{ $task->owner['email'] }}</td>
                         <td class="text-center">{{ $task->inspector['email'] }}</td>
                         <td class="text-center">{{ $task->item }}</td>
                         <td class="text-center">{{ $task->location }}</td>
@@ -76,6 +76,9 @@
                                     @break
                                 @case(4)
                                     <span class="label label-default">Finish</span>
+                                    @break
+                                @case(5)
+                                    <span class="label label-default">Expired</span>
                                     @break
 
                                 @default

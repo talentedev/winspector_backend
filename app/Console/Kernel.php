@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DB;
+use Carbon\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +26,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            $tasks = DB::table('tasks')
+                        ->where('status', 0)
+                        ->orWhere('status', 1)
+                        ->whereDate('due_date', '<', Carbon::now())
+                        ->update(array('status' => 5));
+        })->daily();
     }
 
     /**
